@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#305fd0">
+  <title>Привычки · Моя неделя</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="masthead"><a class="brand" href="./index.html"><span class="brand-icon" aria-hidden="true">✓</span> Привычки</a><span class="timezone">Екатеринбург · UTC+5</span></header>
+    <section class="intro"><div><h1>Моя неделя</h1><p>Небольшие действия. День за днём.</p></div><div class="week-stamp" aria-hidden="true">ПН<br><span>ВС</span></div></section>
+    <section class="workspace" aria-label="Трекер привычек">
+      <div class="week-toolbar"><h2 id="week-title"></h2><nav aria-label="Выбор недели"><button id="prev" aria-label="Предыдущая неделя">‹</button><button id="current">Эта неделя</button><button id="next" aria-label="Следующая неделя">›</button></nav></div>
+      <form id="add-form" novalidate><label for="habit-name">Что хочешь делать каждый день?</label><div class="add-row"><input id="habit-name" maxlength="120" placeholder="Например, читать 15 минут" autocomplete="off" aria-describedby="add-error"><button class="primary" type="submit">Добавить</button></div><p id="add-error" class="error" role="alert"></p></form>
+      <div id="habits"></div>
+      <p class="grid-hint">Отмечай сегодня и прошедшие дни. Будущие дни и дни до создания привычки недоступны.</p>
+    </section>
+    <section class="backup" aria-labelledby="backup-title"><div><h2 id="backup-title">Твои привычки остаются с тобой</h2><p>Данные хранятся только в этом браузере. Скачивай копию перед очисткой браузера или переносом на другое устройство.</p></div><div class="backup-actions"><button id="export">Скачать копию данных</button><button id="import">Загрузить копию</button><input type="file" id="file" accept=".json,application/json" hidden></div></section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <footer>Без регистрации. Без синхронизации между устройствами.</footer>
+  </main>
+  <dialog id="edit-dialog"><form id="edit-form" novalidate><h2>Изменить привычку</h2><label for="edit-name">Название</label><input id="edit-name" maxlength="120" autocomplete="off"><p id="edit-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="edit-cancel">Отмена</button><button class="primary" type="submit">Сохранить</button></div></form></dialog>
+  <dialog id="confirm-dialog"><h2 id="confirm-title"></h2><p id="confirm-text"></p><div class="dialog-actions"><button id="confirm-cancel">Отмена</button><button id="confirm-ok" class="primary">Подтвердить</button></div></dialog>
+</body>
+</html>
