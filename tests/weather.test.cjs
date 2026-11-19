@@ -41,3 +41,13 @@ test('weather and update time are visible and stale weather is labelled', async 
   assert.match(elements.get('weather-updated').textContent, /Обновлено/);
   assert.match(elements.get('weather-status').textContent, /устарели/);
 });
+
+test('a service worker fallback warns even when saved weather is recent', async () => {
+  const data = {version:1,updated_at:new Date().toISOString(),
+    current:{temperature_c:1,feels_like_c:0,wind_ms:2,weather_code:0},
+    today:{date:'2026-11-19',temperature_min_c:-2,temperature_max_c:3,
+      precipitation_probability_percent:10,sunrise:'2026-11-19T08:45:00+05:00',sunset:'2026-11-19T16:40:00+05:00'}};
+  const elements = await run({ok:true,json:async()=>data,headers:new Headers({'X-Weather-Cache':'fallback'})});
+  assert.equal(elements.get('weather-details').hidden,false);
+  assert.match(elements.get('weather-status').textContent,/Не удалось обновить погоду/);
+});

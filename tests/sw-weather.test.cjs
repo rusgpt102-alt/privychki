@@ -12,18 +12,21 @@ test('service worker keeps good weather when a later response has broken fields'
       precipitation_probability_percent:80,sunrise:'2026-11-19T08:45:00+05:00',sunset:'2026-11-19T16:40:00+05:00'}};
   let payload = good;
   const cache = {match:async key=>stored.get(key)?.clone(),put:async(key,value)=>stored.set(key,value.clone())};
-  const sandbox = {URL,Request,Response,AbortSignal,Date,Number,
+  const sandbox = {URL,Request,Response,Headers,AbortSignal,Date,Number,
     self:{location:'http://localhost/',addEventListener:(name,fn)=>handlers[name]=fn},
     caches:{open:async()=>cache},fetch:async()=>new Response(JSON.stringify(payload),{status:200})};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'..','sw.js'),'utf8'),sandbox);
   async function request() {
     let response;
     handlers.fetch({request:new Request('http://localhost/data.json'),respondWith:value=>response=value});
-    return (await response).json();
+    const result = await response;
+    return {data:await result.json(),cached:result.headers.get('X-Weather-Cache')};
   }
-  assert.equal((await request()).current.feels_like_c,-12);
+  assert.equal((await request()).data.current.feels_like_c,-12);
   payload = {...good,current:{...good.current,feels_like_c:null}};
-  assert.equal((await request()).current.feels_like_c,-12,'Bad response must not replace the cached weather');
+  const fallback = await request();
+  assert.equal(fallback.data.current.feels_like_c,-12,'Bad response must not replace the cached weather');
+  assert.equal(fallback.cached,'fallback','The page must know weather came from a fallback cache');
   payload = {...good,current:{...good.current,temperature_c:2}};
-  assert.equal((await request()).current.temperature_c,2,'A fresh valid response must replace the cache');
+  assert.equal((await request()).data.current.temperature_c,2,'A fresh valid response must replace the cache');
 });

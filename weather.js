@@ -54,7 +54,7 @@
       const response = await fetch('./data.json', {cache:'no-store', signal:AbortSignal.timeout(15000)});
       if (!response.ok) throw Error('Weather unavailable');
       lastData = validate(await response.json());
-      render(lastData);
+      render(lastData, response.headers?.get('X-Weather-Cache') === 'fallback');
     } catch {
       if (lastData) render(lastData, true);
       else {

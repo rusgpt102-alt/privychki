@@ -45,8 +45,11 @@ self.addEventListener('fetch', event => {
         await cache.put(new URL('data.json', ROOT).href, response.clone());
         return response;
       } catch {
-        return (await cache.match(new URL('data.json', ROOT).href)) ||
-          new Response('Weather unavailable', {status: 503});
+        const saved = await cache.match(new URL('data.json', ROOT).href);
+        if (!saved) return new Response('Weather unavailable', {status: 503});
+        const headers = new Headers(saved.headers);
+        headers.set('X-Weather-Cache', 'fallback');
+        return new Response(saved.body, {status: 200, headers});
       }
     }
     if (request.mode === 'navigate') return (await cache.match(ROOT));
