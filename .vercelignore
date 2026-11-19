@@ -1,0 +1,14 @@
+# Publish only the same application files as GitHub Pages.
+/*
+!index.html
+!style.css
+!app.js
+!weather.js
+!pwa.js
+!sw.js
+!data.json
+!manifest.webmanifest
+!icon.svg
+!icon-192.png
+!icon-512.png
+!apple-touch-icon.png

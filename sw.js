@@ -1,5 +1,5 @@
 // Increase VERSION for every deployment that changes application files.
-const VERSION = '3';
+const VERSION = '4';
 const PREFIX = 'privychki-app-';
 const CACHE = PREFIX + VERSION;
 const ROOT = new URL('./', self.location).href;
