@@ -2,23 +2,23 @@
   "version": 1,
   "city": "Екатеринбург",
   "timezone": "Asia/Yekaterinburg",
-  "updated_at": "2026-11-26T13:42:29Z",
+  "updated_at": "2026-11-26T16:24:53Z",
   "source": {
     "name": "Open-Meteo",
     "url": "https://open-meteo.com/",
     "attribution": "Weather data by Open-Meteo.com (CC BY 4.0)"
   },
   "current": {
-    "time": "2026-11-26T18:30+05:00",
-    "temperature_c": -2.9,
-    "feels_like_c": -7.7,
-    "precipitation_mm": 0.1,
-    "weather_code": 71,
-    "wind_ms": 3.86
+    "time": "2026-11-26T21:15+05:00",
+    "temperature_c": -3.3,
+    "feels_like_c": -8.5,
+    "precipitation_mm": 0.0,
+    "weather_code": 3,
+    "wind_ms": 4.44
   },
   "today": {
     "date": "2026-11-26",
-    "temperature_min_c": -3.6,
+    "temperature_min_c": -3.8,
     "temperature_max_c": -0.2,
     "precipitation_probability_percent": 100,
     "sunrise": "2026-11-26T09:00+05:00",
